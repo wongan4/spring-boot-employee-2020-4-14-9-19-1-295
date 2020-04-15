@@ -27,8 +27,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable("id") int id) {
-        return this.idEmployeeMap.get(id);
+    public Employee getEmployee(@PathVariable("id") int employeeId) {
+        return this.idEmployeeMap.get(employeeId);
     }
 
     @GetMapping(params = {"page", "pageSize"})
@@ -55,13 +55,13 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public void updateEmployee(@RequestBody Employee employee, @PathVariable("id") int id) {
-        this.idEmployeeMap.put(id, employee);
+    public void updateEmployee(@RequestBody Employee employee, @PathVariable("id") int employeeId) {
+        this.idEmployeeMap.put(employeeId, employee);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteEmployee(@PathVariable("id") int id) {
-        this.idEmployeeMap.remove(id);
+    public void deleteEmployee(@PathVariable("id") int employeeId) {
+        this.idEmployeeMap.remove(employeeId);
     }
 
 
