@@ -13,12 +13,12 @@ public class EmployeeController {
 
     public EmployeeController() {
         this.idEmployeeMap = new HashMap<>();
-        this.idEmployeeMap.put(1, new Employee(1, "male", "default1", 18));
-        this.idEmployeeMap.put(2, new Employee(2, "female", "default2", 19));
-        this.idEmployeeMap.put(3, new Employee(3, "male", "default3", 20));
-        this.idEmployeeMap.put(4, new Employee(4, "female", "default4", 21));
-        this.idEmployeeMap.put(5, new Employee(5, "female", "default5", 22));
-        this.idEmployeeMap.put(6, new Employee(6, "male", "default6", 23));
+        this.idEmployeeMap.put(1, new Employee(1, "male", "default1", 18, 60));
+        this.idEmployeeMap.put(2, new Employee(2, "female", "default2", 19, 100));
+        this.idEmployeeMap.put(3, new Employee(3, "male", "default3", 20, 10000));
+        this.idEmployeeMap.put(4, new Employee(4, "female", "default4", 21, 56));
+        this.idEmployeeMap.put(5, new Employee(5, "female", "default5", 22, 0));
+        this.idEmployeeMap.put(6, new Employee(6, "male", "default6", 23, 500));
     }
 
     @GetMapping
