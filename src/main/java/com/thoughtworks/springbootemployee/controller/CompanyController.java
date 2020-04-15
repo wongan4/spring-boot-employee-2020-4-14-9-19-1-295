@@ -8,10 +8,8 @@ import com.thoughtworks.springbootemployee.model.CompanyBasicInfo;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/companies")
@@ -38,12 +36,22 @@ public class CompanyController {
 
     @GetMapping("/{id}")
     public Company getCompany(@PathVariable("id") int companyId) {
-        this.idCompanyMap.get(companyId);
+        return this.idCompanyMap.get(companyId);
     }
 
     @PostMapping
     public void addCompany(@RequestBody Company company) {
         this.idCompanyMap.put(company.getId(), company);
+    }
+
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Company> getCompaniesInPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+        List<Company> companies = new ArrayList<>(this.idCompanyMap.values());
+        return companies.stream()
+                .sorted(Comparator.comparing(Company::getId))
+                .skip((page - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 
     @PutMapping("/{id}")
