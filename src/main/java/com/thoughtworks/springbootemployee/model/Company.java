@@ -1,13 +1,15 @@
 package com.thoughtworks.springbootemployee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 public class Company {
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private int id;
+
     private String companyName;
     private int employeesNumber;
     private List<Employee> employees;

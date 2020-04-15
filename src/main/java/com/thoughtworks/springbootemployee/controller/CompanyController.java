@@ -1,6 +1,10 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.CompanyBasicInfo;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,8 +36,24 @@ public class CompanyController {
         return new ArrayList<>(this.idCompanyMap.values());
     }
 
+    @GetMapping("/{id}")
+    public Company getCompany(@PathVariable("id") int companyId) {
+        this.idCompanyMap.get(companyId);
+    }
+
     @PostMapping
     public void addCompany(@RequestBody Company company) {
         this.idCompanyMap.put(company.getId(), company);
+    }
+
+    @PutMapping("/{id}")
+    public void updateCompany(@RequestBody CompanyBasicInfo companyBasicInfo, @PathVariable("id") int companyId) {
+        this.idCompanyMap.get(companyId).setCompanyName(companyBasicInfo.getCompanyName());
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCompany(@PathVariable("id") int companyId) {
+        this.idCompanyMap.get(companyId).setEmployees(new ArrayList<>());
+        this.idCompanyMap.get(companyId).setEmployeesNumber(0);
     }
 }
