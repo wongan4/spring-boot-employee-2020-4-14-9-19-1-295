@@ -44,6 +44,11 @@ public class CompanyController {
         this.idCompanyMap.put(company.getId(), company);
     }
 
+    @GetMapping("/{id}/employees")
+    public List<Employee> getEmployeesOfCompany(@PathVariable("id") int companyId) {
+        return this.idCompanyMap.get(companyId).getEmployees();
+    }
+
     @GetMapping(params = {"page", "pageSize"})
     public List<Company> getCompaniesInPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
         List<Company> companies = new ArrayList<>(this.idCompanyMap.values());
