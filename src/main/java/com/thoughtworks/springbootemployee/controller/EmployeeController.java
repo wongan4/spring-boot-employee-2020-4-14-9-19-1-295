@@ -32,13 +32,20 @@ public class EmployeeController {
     }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<Employee> getEmployeePage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+    public List<Employee> getEmployeeInPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
         List<Employee> employees = new ArrayList<>(this.idEmployeeMap.values());
-        return employees
-                .stream()
+        return employees.stream()
                 .sorted(Comparator.comparing(Employee::getId))
                 .skip((page - 1) * pageSize)
                 .limit(pageSize)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping(params = {"gender"})
+    public List<Employee> getEmployeeWithGender(@RequestParam("gender") String gender) {
+        List<Employee> employees = new ArrayList<>(this.idEmployeeMap.values());
+        return employees.stream()
+                .filter(employee -> employee.getGender().equals("male"))
                 .collect(Collectors.toList());
     }
 
