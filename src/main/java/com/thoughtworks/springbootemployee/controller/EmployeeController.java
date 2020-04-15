@@ -13,7 +13,12 @@ public class EmployeeController {
 
     public EmployeeController() {
         this.idEmployeeMap = new HashMap<>();
-        this.idEmployeeMap.put(1, new Employee(1, "male", "default", 18));
+        this.idEmployeeMap.put(1, new Employee(1, "male", "default1", 18));
+        this.idEmployeeMap.put(2, new Employee(2, "female", "default2", 19));
+        this.idEmployeeMap.put(3, new Employee(3, "male", "default3", 20));
+        this.idEmployeeMap.put(4, new Employee(4, "female", "default4", 21));
+        this.idEmployeeMap.put(5, new Employee(5, "female", "default5", 22));
+        this.idEmployeeMap.put(6, new Employee(6, "male", "default6", 23));
     }
 
     @GetMapping
@@ -26,7 +31,16 @@ public class EmployeeController {
         return this.idEmployeeMap.get(id);
     }
 
-
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Employee> getEmployeePage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+        List<Employee> employees = new ArrayList<>(this.idEmployeeMap.values());
+        return employees
+                .stream()
+                .sorted(Comparator.comparing(Employee::getId))
+                .skip((page - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
 
     @PostMapping
     public void addEmployee(@RequestBody Employee employee) {
