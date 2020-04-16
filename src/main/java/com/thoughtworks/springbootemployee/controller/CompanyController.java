@@ -3,66 +3,51 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.CompanyBasicInfo;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.service.CompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    private Map<Integer, Company> idCompanyMap;
 
-    public void temp(){
-        System.out.println("hello world");
-    }
-
-    public Map<Integer, Company> getIdCompanyMap() {
-        return idCompanyMap;
-    }
-
-    public void setIdCompanyMap(Map<Integer, Company> idCompanyMap) {
-        this.idCompanyMap = idCompanyMap;
-    }
+    @Autowired
+    private CompanyService companyService;
 
     @GetMapping
     public List<Company> getCompanies() {
-        return new ArrayList<>(this.idCompanyMap.values());
+        return this.companyService.getCompanies();
     }
 
     @GetMapping("/{id}")
-    public Company getCompany(@PathVariable("id") int companyId) {
-        return this.idCompanyMap.get(companyId);
+    public Company getCompanyById(@PathVariable("id") int companyId) {
+        return this.companyService.getCompaniesById(companyId);
     }
 
     @PostMapping
     public void addCompany(@RequestBody Company company) {
-        this.idCompanyMap.put(company.getId(), company);
+        this.companyService.addCompany(company);
     }
 
     @GetMapping("/{id}/employees")
     public List<Employee> getEmployeesOfCompany(@PathVariable("id") int companyId) {
-        return this.idCompanyMap.get(companyId).getEmployees();
+        return this.companyService.getEmployeesOfCompany(companyId);
     }
 
     @GetMapping(params = {"page", "pageSize"})
     public List<Company> getCompaniesInPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        List<Company> companies = new ArrayList<>(this.idCompanyMap.values());
-        return companies.stream()
-                .sorted(Comparator.comparing(Company::getId))
-                .skip((page - 1) * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
+        return this.companyService.getCompaniesInPage(page, pageSize);
     }
 
     @PutMapping("/{id}")
     public void updateCompany(@RequestBody CompanyBasicInfo companyBasicInfo, @PathVariable("id") int companyId) {
-        this.idCompanyMap.get(companyId).setCompanyName(companyBasicInfo.getCompanyName());
+        this.companyService.updateCompany(companyBasicInfo, companyId);
     }
 
     @DeleteMapping("/{id}")
     public void deleteCompany(@PathVariable("id") int companyId) {
-        this.idCompanyMap.get(companyId).setEmployees(new ArrayList<>());
-        this.idCompanyMap.get(companyId).setEmployeesNumber(0);
+        this.companyService.deleteCompany(companyId);
     }
 }

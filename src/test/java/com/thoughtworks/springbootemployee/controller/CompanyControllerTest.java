@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.CompanyBasicInfo;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -30,8 +31,8 @@ public class CompanyControllerTest {
     @Autowired
     private CompanyController companyController;
 
-//    @Autowired
-//    private CompanyRepository companyRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
     @Before
     public void setup() {
@@ -46,7 +47,7 @@ public class CompanyControllerTest {
         idCompanyMap.put(1, apple);
         idCompanyMap.put(2, microsoft);
         RestAssuredMockMvc.standaloneSetup(companyController);
-        this.companyController.setIdCompanyMap(idCompanyMap);
+        this.companyRepository.setIdCompanyMap(idCompanyMap);
     }
 
     @Test
@@ -139,10 +140,10 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void should_return_ok_when_delete_employee() {
+    public void should_return_ok_when_delete_company() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .delete("/employees/5");
+                .delete("/companies/1");
 
         Assert.assertEquals(200, response.getStatusCode());
     }
