@@ -1,8 +1,8 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.CompanyBasicInfo;
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -109,34 +108,32 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void should_return_employee_page_when_get_employess_by_page() {
+    public void should_return_company_page_when_get_companies_by_page() {
         Map<String, Integer> pageQueryParams = new HashMap<>();
         pageQueryParams.put("page", 2);
-        pageQueryParams.put("pageSize", 2);
+        pageQueryParams.put("pageSize", 1);
 
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .params(pageQueryParams)
                 .when()
-                .get("/employees");
+                .get("/companies");
 
-        List<Employee> employees = response.getBody().as(new TypeRef<List<Employee>>() {
+        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
             @Override
             public Type getType() {
                 return super.getType();
             }
         });
-        Assert.assertEquals(2, employees.size());
-        Assert.assertEquals(3, employees.get(0).getId());
-        Assert.assertEquals(4, employees.get(1).getId());
+        Assert.assertEquals(1, companies.size());
     }
 
     @Test
-    public void should_return_ok_when_update_employee() {
-        Employee employee = new Employee(1, "female", "default1", 100, 0);
+    public void should_return_ok_when_update_company() {
+        CompanyBasicInfo companyBasicInfo = new CompanyBasicInfo("dummy");
         MockMvcResponse response = given().contentType(ContentType.JSON)
-                .body(employee)
+                .body(companyBasicInfo)
                 .when()
-                .put("/employees/1");
+                .put("/companies/1");
 
         Assert.assertEquals(200, response.getStatusCode());
     }
