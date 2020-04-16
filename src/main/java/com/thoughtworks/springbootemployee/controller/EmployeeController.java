@@ -45,7 +45,7 @@ public class EmployeeController {
     public List<Employee> getEmployeeWithGender(@RequestParam("gender") String gender) {
         List<Employee> employees = new ArrayList<>(this.idEmployeeMap.values());
         return employees.stream()
-                .filter(employee -> employee.getGender().equals("male"))
+                .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
     }
 

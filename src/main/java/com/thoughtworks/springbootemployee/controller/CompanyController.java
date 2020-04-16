@@ -1,8 +1,5 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.CompanyBasicInfo;
 import com.thoughtworks.springbootemployee.model.Employee;
