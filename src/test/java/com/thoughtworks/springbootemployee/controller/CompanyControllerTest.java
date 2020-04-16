@@ -77,7 +77,6 @@ public class CompanyControllerTest {
         Assert.assertEquals(200, response.getStatusCode());
 
         Company company = response.getBody().as(Company.class);
-        Assert.assertEquals(1, company.getId());
         Assert.assertEquals("Apple", company.getCompanyName());
     }
 
