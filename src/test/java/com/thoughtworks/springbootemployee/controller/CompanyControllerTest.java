@@ -81,11 +81,10 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void should_return_male_employees_when_get_employee_by_gender() {
+    public void should_return_employees_when_get_employees_from_company() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
-                .params("gender", "male")
                 .when()
-                .get("/employees");
+                .get("/companies/2/employees");
 
         Assert.assertEquals(200, response.getStatusCode());
 
@@ -95,8 +94,7 @@ public class CompanyControllerTest {
                 return super.getType();
             }
         });
-        Assert.assertEquals(3, employees.size());
-        Assert.assertEquals("default1", employees.get(0).getName());
+        Assert.assertEquals(2, employees.size());
     }
 
     @Test
