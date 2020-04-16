@@ -13,17 +13,16 @@ import java.util.stream.Collectors;
 public class CompanyController {
     private Map<Integer, Company> idCompanyMap;
 
-    public CompanyController() {
-        this.idCompanyMap = new HashMap<>();
-        List<Employee> appleEmployees = new ArrayList<>();
-        appleEmployees.add(new Employee(1, "male", "aabbc", 5, 100000));
-        List<Employee> microsoftEmployee = new ArrayList<>();
-        microsoftEmployee.add(new Employee(1, "male", "default1", 18, 60));
-        microsoftEmployee.add(new Employee(2, "female", "default2", 19, 100));
-        Company apple = new Company(1, "Apple", appleEmployees);
-        Company microsoft = new Company(2, "Microsoft", microsoftEmployee);
-        this.idCompanyMap.put(1, apple);
-        this.idCompanyMap.put(2, microsoft);
+    public void temp(){
+        System.out.println("hello world");
+    }
+
+    public Map<Integer, Company> getIdCompanyMap() {
+        return idCompanyMap;
+    }
+
+    public void setIdCompanyMap(Map<Integer, Company> idCompanyMap) {
+        this.idCompanyMap = idCompanyMap;
     }
 
     @GetMapping

@@ -1,7 +1,8 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -15,42 +16,47 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class EmployeeControllerTest {
+public class CompanyControllerTest {
 
     @Autowired
-    private EmployeeController employeeController;
+    private CompanyController companyController;
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+//    @Autowired
+//    private CompanyRepository companyRepository;
 
     @Before
     public void setup() {
-        Map<Integer, Employee> idEmployeeMap = new HashMap<>();
-        idEmployeeMap.put(1, new Employee(1, "male", "default1", 18, 60));
-        idEmployeeMap.put(2, new Employee(2, "female", "default2", 19, 100));
-        idEmployeeMap.put(3, new Employee(3, "male", "default3", 20, 10000));
-        idEmployeeMap.put(4, new Employee(4, "female", "default4", 21, 56));
-        idEmployeeMap.put(5, new Employee(5, "female", "default5", 22, 0));
-        idEmployeeMap.put(6, new Employee(6, "male", "default6", 23, 500));
-        RestAssuredMockMvc.standaloneSetup(employeeController);
-        this.employeeRepository.setIdEmployeeMap(idEmployeeMap);
+        Map<Integer, Company> idCompanyMap = new HashMap<>();
+        List<Employee> appleEmployees = new ArrayList<>();
+        appleEmployees.add(new Employee(1, "male", "aabbc", 5, 100000));
+        List<Employee> microsoftEmployee = new ArrayList<>();
+        microsoftEmployee.add(new Employee(1, "male", "default1", 18, 60));
+        microsoftEmployee.add(new Employee(2, "female", "default2", 19, 100));
+        Company apple = new Company(1, "Apple", appleEmployees);
+        Company microsoft = new Company(2, "Microsoft", microsoftEmployee);
+        idCompanyMap.put(1, apple);
+        idCompanyMap.put(2, microsoft);
+        RestAssuredMockMvc.standaloneSetup(companyController);
+        this.companyController.setIdCompanyMap(idCompanyMap);
     }
 
     @Test
-    public void should_return_all_employees_when_get_employees() {
+    public void should_return_all_companies_when_get_companies() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .get("/employees");
+                .get("/companies");
 
-        List<Employee> employees = response.getBody().as(new TypeRef<List<Employee>>() {
+        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
             @Override
             public Type getType() {
                 return super.getType();
@@ -58,22 +64,21 @@ public class EmployeeControllerTest {
         });
 
         Assert.assertEquals(200, response.getStatusCode());
-        Assert.assertEquals(6, employees.size());
-        Assert.assertEquals(1, employees.get(0).getId());
-        Assert.assertEquals(6, employees.get(5).getId());
+        Assert.assertEquals(2, companies.size());
+        Assert.assertEquals("Apple", companies.get(0).getCompanyName());
     }
 
     @Test
-    public void should_return_employee_when_get_employee_by_id() {
+    public void should_return_company_when_get_company_by_id() {
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .when()
-                .get("/employees/1");
+                .get("/companies/1");
 
         Assert.assertEquals(200, response.getStatusCode());
 
-        Employee employee = response.getBody().as(Employee.class);
-        Assert.assertEquals(1, employee.getId());
-        Assert.assertEquals("default1", employee.getName());
+        Company company = response.getBody().as(Company.class);
+        Assert.assertEquals(1, company.getId());
+        Assert.assertEquals("Apple", company.getCompanyName());
     }
 
     @Test
