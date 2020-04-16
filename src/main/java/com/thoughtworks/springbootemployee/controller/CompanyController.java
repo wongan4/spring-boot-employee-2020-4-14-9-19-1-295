@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.model.CompanyBasicInfo;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,12 +43,12 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public void updateCompany(@RequestBody CompanyBasicInfo companyBasicInfo, @PathVariable("id") int companyId) {
-        this.companyService.updateCompany(companyBasicInfo, companyId);
+    public ResponseEntity<Object> updateCompany(@RequestBody CompanyBasicInfo companyBasicInfo, @PathVariable("id") int companyId) {
+        return this.companyService.updateCompany(companyBasicInfo, companyId);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCompany(@PathVariable("id") int companyId) {
-        this.companyService.deleteCompany(companyId);
+    public ResponseEntity<Object> deleteCompany(@PathVariable("id") int companyId) {
+        return this.companyService.deleteCompany(companyId);
     }
 }

@@ -31,4 +31,8 @@ public class CompanyRepository {
     public void addCompany(Company company) {
         this.idCompanyMap.put(company.getId(), company);
     }
+
+    public boolean isContainCompanyId(int id) {
+        return this.idCompanyMap.containsKey(id);
+    }
 }

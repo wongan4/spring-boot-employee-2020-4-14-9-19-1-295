@@ -5,10 +5,10 @@ import com.thoughtworks.springbootemployee.model.CompanyBasicInfo;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -46,12 +46,20 @@ public class CompanyService {
                 .collect(Collectors.toList());
     }
 
-    public void updateCompany(CompanyBasicInfo companyBasicInfo, int companyId) {
-        this.companyRepository.getCompanyById(companyId).setCompanyName(companyBasicInfo.getCompanyName());
+    public ResponseEntity<Object> updateCompany(CompanyBasicInfo companyBasicInfo, int companyId) {
+        if (this.companyRepository.isContainCompanyId(companyId)) {
+            this.companyRepository.getCompanyById(companyId).setCompanyName(companyBasicInfo.getCompanyName());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    public void deleteCompany(int companyId) {
-        this.companyRepository.getCompanyById(companyId).setEmployees(new ArrayList<>());
-        this.companyRepository.getCompanyById(companyId).setEmployeesNumber(0);
+    public ResponseEntity<Object> deleteCompany(int companyId) {
+        if (this.companyRepository.isContainCompanyId(companyId)) {
+            this.companyRepository.getCompanyById(companyId).setEmployees(new ArrayList<>());
+            this.companyRepository.getCompanyById(companyId).setEmployeesNumber(0);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
