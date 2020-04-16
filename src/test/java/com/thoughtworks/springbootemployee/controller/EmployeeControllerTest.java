@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -27,9 +28,20 @@ public class EmployeeControllerTest {
     @Autowired
     private EmployeeController employeeController;
 
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     @Before
     public void setUp() throws Exception {
+        Map<Integer, Employee> idEmployeeMap = new HashMap<>();
+        idEmployeeMap.put(1, new Employee(1, "male", "default1", 18, 60));
+        idEmployeeMap.put(2, new Employee(2, "female", "default2", 19, 100));
+        idEmployeeMap.put(3, new Employee(3, "male", "default3", 20, 10000));
+        idEmployeeMap.put(4, new Employee(4, "female", "default4", 21, 56));
+        idEmployeeMap.put(5, new Employee(5, "female", "default5", 22, 0));
+        idEmployeeMap.put(6, new Employee(6, "male", "default6", 23, 500));
         RestAssuredMockMvc.standaloneSetup(employeeController);
+        this.employeeRepository.setIdEmployeeMap(idEmployeeMap);
     }
 
     @Test
@@ -118,7 +130,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_ok_when_update_employee() {
-        Employee employee = new Employee(1, "male", "default1", 100, 0);
+        Employee employee = new Employee(1, "female", "default1", 100, 0);
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()
