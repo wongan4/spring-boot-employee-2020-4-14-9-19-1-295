@@ -98,12 +98,12 @@ public class CompanyControllerTest {
     }
 
     @Test
-    public void should_return_ok_when_add_employee() {
-        Employee employee = new Employee(10, "female", "test", 100, 0);
+    public void should_return_ok_when_add_company() {
+        Company company = new Company(3, "dummy", new ArrayList<>());
         MockMvcResponse response = given().contentType(ContentType.JSON)
-                .body(employee)
+                .body(company)
                 .when()
-                .post("/employees");
+                .post("/companies");
 
         Assert.assertEquals(200, response.getStatusCode());
     }

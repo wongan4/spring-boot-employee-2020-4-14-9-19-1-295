@@ -20,6 +20,10 @@ public class Company {
         this.employeesNumber = employees.size();
     }
 
+    public Company() {
+
+    }
+
     public int getEmployeesNumber() {
         return employeesNumber;
     }
