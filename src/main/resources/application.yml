@@ -1,1 +1,15 @@
+spring:
+  # Spring JDBC configuration
+  database:
+    url: jdbc:h2:mem:testdb
 
+  # Spring Data JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
