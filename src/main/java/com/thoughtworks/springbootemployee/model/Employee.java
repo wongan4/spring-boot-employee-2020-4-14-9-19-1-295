@@ -12,17 +12,14 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@Entity
+@Entity
 public class Employee {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer id;
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String gender;
     private String name;
-//    private Integer age;
-    private int age;
-//    private Integer salary;
-    private int salary;
+    private Integer age;
+    private Integer salary;
 }
