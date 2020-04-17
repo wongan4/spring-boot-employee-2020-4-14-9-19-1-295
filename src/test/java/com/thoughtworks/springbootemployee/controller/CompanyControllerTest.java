@@ -28,123 +28,123 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 @SpringBootTest
 public class CompanyControllerTest {
 
-    @Autowired
-    private CompanyController companyController;
-
-    @Autowired
-    private CompanyRepository companyRepository;
-
-    @Before
-    public void setup() {
-        Map<Integer, Company> idCompanyMap = new HashMap<>();
-        List<Employee> appleEmployees = new ArrayList<>();
-        appleEmployees.add(new Employee(1, "male", "aabbc", 5, 100000));
-        List<Employee> microsoftEmployee = new ArrayList<>();
-        microsoftEmployee.add(new Employee(1, "male", "default1", 18, 60));
-        microsoftEmployee.add(new Employee(2, "female", "default2", 19, 100));
-        Company apple = new Company(1, "Apple", appleEmployees);
-        Company microsoft = new Company(2, "Microsoft", microsoftEmployee);
-        idCompanyMap.put(1, apple);
-        idCompanyMap.put(2, microsoft);
-        RestAssuredMockMvc.standaloneSetup(companyController);
-        this.companyRepository.setIdCompanyMap(idCompanyMap);
-    }
-
-    @Test
-    public void should_return_all_companies_when_get_companies() {
-        MockMvcResponse response = given().contentType(ContentType.JSON)
-                .when()
-                .get("/companies");
-
-        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
-            @Override
-            public Type getType() {
-                return super.getType();
-            }
-        });
-
-        Assert.assertEquals(200, response.getStatusCode());
-        Assert.assertEquals(2, companies.size());
-        Assert.assertEquals("Apple", companies.get(0).getCompanyName());
-    }
-
-    @Test
-    public void should_return_company_when_get_company_by_id() {
-        MockMvcResponse response = given().contentType(ContentType.JSON)
-                .when()
-                .get("/companies/1");
-
-        Assert.assertEquals(200, response.getStatusCode());
-
-        Company company = response.getBody().as(Company.class);
-        Assert.assertEquals("Apple", company.getCompanyName());
-    }
-
-    @Test
-    public void should_return_employees_when_get_employees_from_company() {
-        MockMvcResponse response = given().contentType(ContentType.JSON)
-                .when()
-                .get("/companies/2/employees");
-
-        Assert.assertEquals(200, response.getStatusCode());
-
-        List<Employee> employees = response.getBody().as(new TypeRef<List<Employee>>() {
-            @Override
-            public Type getType() {
-                return super.getType();
-            }
-        });
-        Assert.assertEquals(2, employees.size());
-    }
-
-    @Test
-    public void should_return_ok_when_add_company() {
-        Company company = new Company(3, "dummy", new ArrayList<>());
-        MockMvcResponse response = given().contentType(ContentType.JSON)
-                .body(company)
-                .when()
-                .post("/companies");
-
-        Assert.assertEquals(200, response.getStatusCode());
-    }
-
-    @Test
-    public void should_return_company_page_when_get_companies_by_page() {
-        Map<String, Integer> pageQueryParams = new HashMap<>();
-        pageQueryParams.put("page", 2);
-        pageQueryParams.put("pageSize", 1);
-
-        MockMvcResponse response = given().contentType(ContentType.JSON)
-                .params(pageQueryParams)
-                .when()
-                .get("/companies");
-
-        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
-            @Override
-            public Type getType() {
-                return super.getType();
-            }
-        });
-        Assert.assertEquals(1, companies.size());
-    }
-
-    @Test
-    public void should_return_ok_when_update_company() {
-        CompanyBasicInfo companyBasicInfo = new CompanyBasicInfo("dummy");
-        MockMvcResponse response = given().contentType(ContentType.JSON)
-                .body(companyBasicInfo)
-                .when()
-                .put("/companies/1");
-
-        Assert.assertEquals(200, response.getStatusCode());
-    }
-
-    @Test
-    public void should_return_ok_when_delete_company() {
-        MockMvcResponse response = given().contentType(ContentType.JSON)
-                .when()
-                .delete("/companies/1");
-
-        Assert.assertEquals(200, response.getStatusCode());
-    }
+//    @Autowired
+//    private CompanyController companyController;
+//
+//    @Autowired
+//    private CompanyRepository companyRepository;
+//
+//    @Before
+//    public void setup() {
+//        Map<Integer, Company> idCompanyMap = new HashMap<>();
+//        List<Employee> appleEmployees = new ArrayList<>();
+//        appleEmployees.add(new Employee(1, "male", "aabbc", 5, 100000));
+//        List<Employee> microsoftEmployee = new ArrayList<>();
+//        microsoftEmployee.add(new Employee(1, "male", "default1", 18, 60));
+//        microsoftEmployee.add(new Employee(2, "female", "default2", 19, 100));
+//        Company apple = new Company(1, "Apple", appleEmployees);
+//        Company microsoft = new Company(2, "Microsoft", microsoftEmployee);
+//        idCompanyMap.put(1, apple);
+//        idCompanyMap.put(2, microsoft);
+//        RestAssuredMockMvc.standaloneSetup(companyController);
+//        this.companyRepository.setIdCompanyMap(idCompanyMap);
+//    }
+//
+//    @Test
+//    public void should_return_all_companies_when_get_companies() {
+//        MockMvcResponse response = given().contentType(ContentType.JSON)
+//                .when()
+//                .get("/companies");
+//
+//        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
+//            @Override
+//            public Type getType() {
+//                return super.getType();
+//            }
+//        });
+//
+//        Assert.assertEquals(200, response.getStatusCode());
+//        Assert.assertEquals(2, companies.size());
+//        Assert.assertEquals("Apple", companies.get(0).getCompanyName());
+//    }
+//
+//    @Test
+//    public void should_return_company_when_get_company_by_id() {
+//        MockMvcResponse response = given().contentType(ContentType.JSON)
+//                .when()
+//                .get("/companies/1");
+//
+//        Assert.assertEquals(200, response.getStatusCode());
+//
+//        Company company = response.getBody().as(Company.class);
+//        Assert.assertEquals("Apple", company.getCompanyName());
+//    }
+//
+//    @Test
+//    public void should_return_employees_when_get_employees_from_company() {
+//        MockMvcResponse response = given().contentType(ContentType.JSON)
+//                .when()
+//                .get("/companies/2/employees");
+//
+//        Assert.assertEquals(200, response.getStatusCode());
+//
+//        List<Employee> employees = response.getBody().as(new TypeRef<List<Employee>>() {
+//            @Override
+//            public Type getType() {
+//                return super.getType();
+//            }
+//        });
+//        Assert.assertEquals(2, employees.size());
+//    }
+//
+//    @Test
+//    public void should_return_ok_when_add_company() {
+//        Company company = new Company(3, "dummy", new ArrayList<>());
+//        MockMvcResponse response = given().contentType(ContentType.JSON)
+//                .body(company)
+//                .when()
+//                .post("/companies");
+//
+//        Assert.assertEquals(200, response.getStatusCode());
+//    }
+//
+//    @Test
+//    public void should_return_company_page_when_get_companies_by_page() {
+//        Map<String, Integer> pageQueryParams = new HashMap<>();
+//        pageQueryParams.put("page", 2);
+//        pageQueryParams.put("pageSize", 1);
+//
+//        MockMvcResponse response = given().contentType(ContentType.JSON)
+//                .params(pageQueryParams)
+//                .when()
+//                .get("/companies");
+//
+//        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
+//            @Override
+//            public Type getType() {
+//                return super.getType();
+//            }
+//        });
+//        Assert.assertEquals(1, companies.size());
+//    }
+//
+//    @Test
+//    public void should_return_ok_when_update_company() {
+//        CompanyBasicInfo companyBasicInfo = new CompanyBasicInfo("dummy");
+//        MockMvcResponse response = given().contentType(ContentType.JSON)
+//                .body(companyBasicInfo)
+//                .when()
+//                .put("/companies/1");
+//
+//        Assert.assertEquals(200, response.getStatusCode());
+//    }
+//
+//    @Test
+//    public void should_return_ok_when_delete_company() {
+//        MockMvcResponse response = given().contentType(ContentType.JSON)
+//                .when()
+//                .delete("/companies/1");
+//
+//        Assert.assertEquals(200, response.getStatusCode());
+//    }
 }
