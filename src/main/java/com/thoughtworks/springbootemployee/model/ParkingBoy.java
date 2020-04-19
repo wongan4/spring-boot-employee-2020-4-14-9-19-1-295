@@ -15,10 +15,10 @@ public class ParkingBoy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String nickname;
+    private Integer employeeId;
 
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "employeeId", referencedColumnName = "id", insertable=false, updatable=false)
     private Employee employee;
 }

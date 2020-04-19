@@ -21,6 +21,6 @@ public class ParkingBoyService {
 
     public ResponseEntity<Object> addParkingBoy(ParkingBoy parkingBoy) {
         this.parkingBoyRepository.save(parkingBoy);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

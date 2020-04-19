@@ -38,11 +38,6 @@ public class CompanyControllerTest {
     @MockBean
     private CompanyRepository mockCompanyRepository;
 
-    @Autowired
-    private CompanyRepository companyRepository;
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
 
     private List<Company> getSampleCompanyList() {
         List<Company> mockCompanyList = new ArrayList<>();
@@ -61,8 +56,6 @@ public class CompanyControllerTest {
     @Before
     public void setup() {
         RestAssuredMockMvc.standaloneSetup(companyController);
-        RestAssuredMockMvc.standaloneSetup(companyRepository);
-        RestAssuredMockMvc.standaloneSetup(employeeRepository);
     }
 
     @Test
@@ -224,7 +217,7 @@ public class CompanyControllerTest {
 
     @After
     public void clean() {
-        this.employeeRepository.deleteAll();
-        this.companyRepository.deleteAll();
+//        this.employeeRepository.deleteAll();
+//        this.companyRepository.deleteAll();
     }
 }
