@@ -1,6 +1,7 @@
-create table Company (
-    id int,
-    companyName varchar(10),
-    employeeNumber int
+create table company (
+    id int not null auto_increment,
+    company_name varchar(10),
+    employees_number int,
+    primary key(id)
 );
 

@@ -1,5 +1,6 @@
 create table parking_boy (
-    id int,
+    id int not null auto_increment,
     nickname varchar(10),
-    employeeId int
+    employee_id int,
+    primary key(id)
 );
