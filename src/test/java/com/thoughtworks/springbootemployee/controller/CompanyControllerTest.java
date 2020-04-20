@@ -190,34 +190,4 @@ public class CompanyControllerTest {
         Mockito.verify(this.mockCompanyRepository, Mockito.times(1)).deleteById(1);
         Assert.assertEquals(200, response.getStatusCode());
     }
-
-    @Test
-    public void should_return_company_with_employees_when_one_company_relates_many_employees() {
-//        Company company = new Company(1, "big", 1, new ArrayList<>());
-//        Employee employee = new Employee(1, "male", "test", 10, 0, 1);
-//        this.companyRepository.save(company);
-//        this.employeeRepository.save(employee);
-
-//        MockMvcResponse response = given().contentType(ContentType.JSON)
-//                .when()
-//                .get("/companies");
-
-//        System.out.println(response.getBody());
-
-//        List<Company> companies = response.getBody().as(new TypeRef<List<Company>>() {
-//            @Override
-//            public Type getType() {
-//                return super.getType();
-//            }
-//        });
-//
-//        Assert.assertEquals(1, companies.size());
-//        Assert.assertEquals(1, companies.get(0).getEmployees().size());
-    }
-
-    @After
-    public void clean() {
-//        this.employeeRepository.deleteAll();
-//        this.companyRepository.deleteAll();
-    }
 }

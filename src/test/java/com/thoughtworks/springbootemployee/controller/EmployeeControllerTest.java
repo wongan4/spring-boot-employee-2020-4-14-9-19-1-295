@@ -113,7 +113,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void should_return_ok_when_add_employee() {
-        Employee employee = new Employee(10, "female", "test", 100, 0, 1);
+        Employee employee = new Employee(null, "female", "test", 100, 0, 1);
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()
@@ -124,7 +124,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void should_return_employee_page_when_get_employess_by_page() {
+    public void should_return_employee_page_when_get_employees_by_page() {
         Map<String, Integer> pageQueryParams = new HashMap<>();
         pageQueryParams.put("page", 2);
         pageQueryParams.put("pageSize", 2);

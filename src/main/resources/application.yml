@@ -1,14 +1,9 @@
 spring:
-  # Spring JDBC configuration
-  database:
-    url: jdbc:h2:mem:testdb
-
-  # Spring Data JPA configuration
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+  datasource:
+    url: jdbc:h2:C:\tatp_training\flyway_test
 
   h2:
     console:
       enabled: true
+
+
